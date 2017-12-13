@@ -86,6 +86,8 @@ String temp;
 
     if(toggInterv == ERR_TOGGLE_INTERVAL)
     {
+        // stop animations and turn off LEDs...
+
         // wait now before proceeding...
         delay(toggInterv);
 
@@ -112,8 +114,10 @@ String temp;
                 // more info in esp8266-udp.cpp
                 temp = String((char *)&readBuffer[0]);
     
-                Serial.println();
                 Serial.println("loop() - data = " + temp);
+                Serial.println();
+                Serial.println("loop() - sent  = " + String(sent));
+                Serial.println("loop() - reply = " + String(testReply));
                 Serial.println();
                 Serial.flush();
             }

@@ -82,13 +82,11 @@ int iRet = 0;
         // write & send the UDP packet...
         iRet = udp.write(writeBuffer, UDP_PAYLOAD_SIZE);
 
-        if(!checkDebugMute()) Serial.println("replyUDP("+String(iRet)+") - reply to " + udp.remoteIP() + ":" + udp.remotePort());
+        if(!checkDebugMute()) Serial.println("replyUDP("+String(iRet)+") - reply to " + IPAddress(udp.remoteIP()).toString() + ":" + udp.remotePort());
     
         // finish & send the packet
         if(udp.endPacket() == 0) iRet = -1;
-
     }
-
     return iRet;
 }
 
@@ -109,8 +107,8 @@ int readLen = 0;
         // read the payload
         readLen = udp.read(readBuffer, UDP_PAYLOAD_SIZE);
     }
-
-    if(!checkDebugMute()) Serial.println("recvUDP() - packetLen = " + String(packetLen) + "  readLen = " + readLen);
+// to noisey...
+//    if(!checkDebugMute()) Serial.println("recvUDP() - packetLen = " + String(packetLen) + "  readLen = " + readLen);
     return readLen;
 }
 

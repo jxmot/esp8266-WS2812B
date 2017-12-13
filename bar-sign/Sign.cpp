@@ -1,14 +1,17 @@
 
 #include "Sign.h"
 
+
 Sign::Sign()
 {
     strip = NULL;
+    animations = NULL;
 }
 
 Sign::~Sign()
 {
-    delete strip
+    delete strip;
+    delete animations;
 }
 
 void Sign::initStrip(int pxCount/* = DEFAULT_PIXEL_COUNT*/)

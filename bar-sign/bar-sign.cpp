@@ -1,26 +1,14 @@
 #include "bar-sign.h"
 
-#include "SignChannel.h"
-
-// three element pixels, in different order and speeds
-NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod> strip(PixelCount, PixelPin);
-
 BarSign::BarSign()
 {
-    initStrip();
+    // initialize sign
 
     // read config - 
     //      channel settings
     //      scripts
 
     // begin initial state
-}
-
-void BarSign::initStrip()
-{
-    // this resets all the neopixels to an off state
-    strip.Begin();
-    strip.Show();
 }
 
 bool BarSign::configChannels()

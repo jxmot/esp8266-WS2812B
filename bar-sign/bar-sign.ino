@@ -1,7 +1,5 @@
 
 
-#include <NeoPixelBus.h>
-
 #include "bar-sign.h"
 
 void setup()
@@ -13,14 +11,13 @@ void setup()
     Serial.println("Initializing...");
     Serial.flush();
 
-    //initStrip();
+    // read config and...
+        // init wifi
+        // init UDP server
 
-    // read config
+    // instantiate a sign object...
 
-    // init wifi
-
-    // init UDP server
-
+    // running...
     Serial.println();
     Serial.println("Running...");
 }

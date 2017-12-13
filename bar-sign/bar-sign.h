@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "Sign.h"
+
 class BarSign
 {
     public:
@@ -9,7 +11,6 @@ class BarSign
         ~BarSign();
 
     private:
-        void initStrip();
         bool configChannels();
         bool configScripts();
 };

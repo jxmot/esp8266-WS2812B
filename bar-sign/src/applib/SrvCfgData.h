@@ -19,10 +19,7 @@
 class srvcfg {
     public:
         String label;
-        String addr;
-        IPAddress ipaddr;
-        int recvport;
-        int sendport;
+        int port;
 };
 
 // to limit memory use only 4 servers can be configured

@@ -5,7 +5,10 @@
 #include "AppCfgData.h"
 #include "WifiCfgData.h"
 #include "SrvCfgData.h"
+
 #include "connectWiFi.h"
+
+#include "esp8266-ino.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,6 +20,9 @@ extern "C" {
 
 // default serial baud rate, modify as needed
 const int DEFAULT_SERIAL_BAUD = 115200;
+
+// the default interval for the on-board LED on/off
+int toggInterv = TOGGLE_INTERVAL;
 
 // functions that are only called from within this module
 void initLED();
@@ -126,6 +132,7 @@ void printError(String func, String _errMsg)
         Serial.begin(DEFAULT_SERIAL_BAUD);
     }
     Serial.println(func + " ERROR! - " + _errMsg);
+    Serial.flush();
 }
 
 /*
@@ -294,7 +301,7 @@ srvcfg cfg;
 // 
 // To DO: Obtain these strings from a config file, and/or
 //        seek a better method.
-const String labels[] = {"udp1","udp2","END"};
+const String labels[] = {"udp","http","END"};
 
     if((a_cfgdat != NULL) && !a_cfgdat->getDebugMute())
     {
@@ -302,11 +309,8 @@ const String labels[] = {"udp1","udp2","END"};
         {
             if(s_cfgdat->getServerCfg(labels[ix], cfg))
             {
-                Serial.println("label    = " + cfg.label);
-                Serial.println("addr     = " + cfg.addr);
-                Serial.println("ipaddr   = " + cfg.ipaddr.toString());
-                Serial.println("recvport = " + String(cfg.recvport));
-                Serial.println("sendport = " + String(cfg.sendport));
+                Serial.println("label = " + cfg.label);
+                Serial.println("port  = " + String(cfg.port));
                 Serial.println();
             } else Serial.println("not found in cfg - " + labels[ix]);
         }

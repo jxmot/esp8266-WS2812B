@@ -12,7 +12,7 @@
 #include <ArduinoJson.h>
 
 // these are known, but not referenced in the client application
-String SrvCfgData::labels[] = {"udp1","udp2","END"};
+String SrvCfgData::labels[] = {"udp","http","END"};
 
 //////////////////////////////////////////////////////////////////////////////
 /*
@@ -37,10 +37,12 @@ void SrvCfgData::parseJSON(std::unique_ptr<char[]>& buf)
         Serial.println();
         Serial.println("SrvCfgData parsing JSON - ");
         Serial.println(buf.get());
+        Serial.println();
+        Serial.flush();
     }
  
     // https://bblanchon.github.io/ArduinoJson/assistant/
-    const size_t bufferSize = JSON_OBJECT_SIZE(2) + 2*JSON_OBJECT_SIZE(3) + 120;
+    const size_t bufferSize = JSON_OBJECT_SIZE(2) + 2*JSON_OBJECT_SIZE(1) + 120;
     StaticJsonBuffer<bufferSize> jsonBuffer;
 
     JsonObject& json = jsonBuffer.parseObject(buf.get());
@@ -55,10 +57,7 @@ void SrvCfgData::parseJSON(std::unique_ptr<char[]>& buf)
     {
         configs[ix] = new srvcfg();
         configs[ix]->label    = labels[ix];
-        configs[ix]->addr     = String((const char *)json[(char *)labels[ix].c_str()]["addr"]);
-        configs[ix]->ipaddr.fromString(configs[ix]->addr);
-        configs[ix]->recvport = json[(char *)labels[ix].c_str()]["recvport"];
-        configs[ix]->sendport = json[(char *)labels[ix].c_str()]["sendport"];
+        configs[ix]->port = json[(char *)labels[ix].c_str()]["port"];
     }
 }
 
@@ -78,10 +77,7 @@ bool bRet = false;
         if(configs[ix]->label == label)
         {
             cfgout.label    = configs[ix]->label;
-            cfgout.addr     = configs[ix]->addr;
-            cfgout.ipaddr   = configs[ix]->ipaddr;
-            cfgout.recvport = configs[ix]->recvport;
-            cfgout.sendport = configs[ix]->sendport;
+            cfgout.port = configs[ix]->port;
             bRet = true;
         }
     }

@@ -5,12 +5,14 @@
 #ifndef ESP8266UDP_H
 #define ESP8266UDP_H
 
+#include "udp-defs.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 extern int initUDP();
-extern int sendUDP(char *payload, int len);
+extern int replyUDP(char *payload, int len);
 extern int recvUDP();
 
 extern unsigned char readBuffer[];

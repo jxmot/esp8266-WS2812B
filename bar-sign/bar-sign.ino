@@ -12,10 +12,18 @@
 //#define CONFIG_DEMO
 
 // required include files...
-#include "applib/esp8266-ino.h"
+#include "src/applib/esp8266-ino.h"
+#include "src/applib/esp8266-udp.h"
 
 #include "bar-sign.h"
 
+// the test data (a string) that we'll send to the server
+char *testReply = "GOT it!!! 1 2 3 4\00";
+
+/* ************************************************************************ */
+/*
+    Application Set Up
+*/
 void setup()
 {
     setupStart();
@@ -56,15 +64,6 @@ void setup()
         }
     }
 
-
-    Serial.println();
-    Serial.println("Initializing...");
-    Serial.flush();
-
-    // read config and...
-        // init wifi
-        // init UDP server
-
     // instantiate a sign object...
 
     // running...
@@ -72,9 +71,59 @@ void setup()
     Serial.println("Running...");
 }
 
+/*
+    Application Execution Loop
+*/
 void loop()
 {
+int sent = 0;
+int rcvd = 0;
+int ix;
 
+String temp;
+
+    yield();
+
+    if(toggInterv == ERR_TOGGLE_INTERVAL)
+    {
+        // wait now before proceeding...
+        delay(toggInterv);
+
+        toggleLED();
+    }
+    else
+    {
+        rcvd = recvUDP();
+
+        // if debug mute is off and we received a reply, then announce it...
+        if((rcvd <= UDP_PAYLOAD_SIZE) && (rcvd > 0))
+        {
+            sent = replyUDP(testReply, strlen(testReply));
+
+            if(!checkDebugMute())
+            {
+                Serial.println();
+                Serial.println("loop() - rcvd = " + String(rcvd));
+    
+                // NOTE: It was assumed that the UDP packet contained a 
+                // string of characters. The string could contain anything 
+                // (up to udp-defs.h:UDP_PAYLOAD_SIZE bytes in size) even
+                // a JSON string. The string MUST be NULL terminated, there's 
+                // more info in esp8266-udp.cpp
+                temp = String((char *)&readBuffer[0]);
+    
+                Serial.println();
+                Serial.println("loop() - data = " + temp);
+                Serial.println();
+                Serial.flush();
+            }
+        } else if(rcvd)
+        {
+            printError(String(__func__), "UDP received packet too long - " + String(rcvd));
+            printError(String(__func__), "Setting error state.");
+            toggInterv = ERR_TOGGLE_INTERVAL;            
+        }
+    }
 }
 
 

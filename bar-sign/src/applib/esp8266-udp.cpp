@@ -46,10 +46,8 @@ int iRet = 0;
     if((connWiFi != NULL) && connWiFi->IsConnected())
     {
         // init the UDP...
-        s_cfgdat->getServerCfg("udp1", udpServer);
-//        s_cfgdat->getServerCfg("udp2", udpServer);
-//        if(udp.begin(udpServer.recvport)) success = true;
-        if(udp.begin(udpServer.sendport)) success = true;
+        s_cfgdat->getServerCfg("udp", udpServer);
+        if(udp.begin(udpServer.port)) success = true;
     }
     if(!checkDebugMute()) Serial.println("initUDP() - success = " + String(success));
 
@@ -62,11 +60,11 @@ int iRet = 0;
 /*
     Send a UDP packet...
 */
-int sendUDP(char *payload, int len)
+int replyUDP(char *payload, int len)
 {
 int iRet = 0;
 
-    if(!checkDebugMute()) Serial.println("sendUDP() - len = " + String(len));
+    if(!checkDebugMute()) Serial.println("replyUDP() - len = " + String(len));
 
     // set the entire write buffer contents to 0
     memset(writeBuffer, 0, UDP_PAYLOAD_SIZE_WRITE);
@@ -79,17 +77,17 @@ int iRet = 0;
         memcpy(writeBuffer, payload, len);
 
         // "begin" the UDP packet...
-        udp.beginPacket(udpServer.ipaddr, udpServer.sendport);
+        udp.beginPacket(udp.remoteIP(), udp.remotePort());
     
         // write & send the UDP packet...
         iRet = udp.write(writeBuffer, UDP_PAYLOAD_SIZE);
 
-        if(!checkDebugMute()) Serial.println("sendUDP("+String(iRet)+") - sending to " + udpServer.addr + ":" + udpServer.sendport);
+        if(!checkDebugMute()) Serial.println("replyUDP("+String(iRet)+") - reply to " + udp.remoteIP() + ":" + udp.remotePort());
     
         // finish & send the packet
         if(udp.endPacket() == 0) iRet = -1;
 
-    } else memset(writeBuffer, 0, UDP_PAYLOAD_SIZE_WRITE);
+    }
 
     return iRet;
 }

@@ -80,7 +80,7 @@ int iRet = 0;
         udp.beginPacket(udp.remoteIP(), udp.remotePort());
     
         // write & send the UDP packet...
-        iRet = udp.write(writeBuffer, UDP_PAYLOAD_SIZE);
+        iRet = udp.write(writeBuffer, len);
 
         if(!checkDebugMute()) Serial.println("replyUDP("+String(iRet)+") - reply to " + IPAddress(udp.remoteIP()).toString() + ":" + udp.remotePort());
     
@@ -104,10 +104,14 @@ int readLen = 0;
     {
         // clear the read buffer
         memset(readBuffer, 0, UDP_PAYLOAD_SIZE_READ);
-        // read the payload
-        readLen = udp.read(readBuffer, UDP_PAYLOAD_SIZE);
+
+        if(packetLen < UDP_PAYLOAD_SIZE)
+        {
+            // read the payload
+            readLen = udp.read(readBuffer, packetLen);
+        } else readLen = packetLen;
     }
-// to noisey...
+// to noisy...
 //    if(!checkDebugMute()) Serial.println("recvUDP() - packetLen = " + String(packetLen) + "  readLen = " + readLen);
     return readLen;
 }

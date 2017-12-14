@@ -177,26 +177,15 @@ int readLen = 0;
 
 /*
 */
-int multiUDP()
+int multiUDP(char *payload, int len)
 {
-
 mcastcfg cfg;
-conninfo conn;
-String startupData;
 
     if(m_cfgdat->getCfg(cfg))
     {
-        if(connWiFi->GetConnInfo(&conn)) 
-        {
-            udp.beginPacketMulticast(cfg.ipaddr, cfg.port, WiFi.localIP());
-
-            startupData = "{\"hostname\":\"" + conn.hostname + "\",\"appname\":\"" + a_cfgdat->getAppName() + "\"}";
-
-            if(!checkDebugMute()) Serial.println("multiUDP() - " + startupData);
-
-            udp.write(startupData.c_str(), strlen(startupData.c_str()));
-            udp.endPacket();
-        }
+        udp.beginPacketMulticast(cfg.ipaddr, cfg.port, WiFi.localIP());
+        udp.write(payload, len);
+        udp.endPacket();
     }
 }
 

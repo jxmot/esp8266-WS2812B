@@ -18,7 +18,7 @@ extern int handleUDP();
 extern int replyUDP(char *payload, int len);
 extern int recvUDP();
 
-extern int multiUDP();
+extern int multiUDP(char *payload, int len);
 
 extern unsigned char readBuffer[];
 extern unsigned char writeBuffer[];

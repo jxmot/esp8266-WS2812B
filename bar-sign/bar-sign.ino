@@ -95,13 +95,21 @@ String temp;
     }
     else
     {
+// function() {
         rcvd = recvUDP();
 
-        // if debug mute is off and we received a reply, then announce it...
         if((rcvd <= UDP_PAYLOAD_SIZE) && (rcvd > 0))
         {
+            // decode the UDP payload contents
+
+            // act on the contents
+
+            // reply to the contents...
+
+            // a "test" reply, comment out later
             sent = replyUDP(testReply, strlen(testReply));
 
+            // if debug mute is off then show some info...
             if(!checkDebugMute())
             {
                 Serial.println();
@@ -117,6 +125,7 @@ String temp;
                 Serial.println("loop() - data = " + temp);
                 Serial.println();
                 Serial.println("loop() - sent  = " + String(sent));
+                // a "test" reply, comment or change out later
                 Serial.println("loop() - reply = " + String(testReply));
                 Serial.println();
                 Serial.flush();
@@ -127,6 +136,7 @@ String temp;
             printError(String(__func__), "Setting error state.");
             toggInterv = ERR_TOGGLE_INTERVAL;            
         }
+// } ^function
     }
 }
 

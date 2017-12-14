@@ -17,9 +17,6 @@
 
 #include "bar-sign.h"
 
-// the test data (a string) that we'll send to the server
-char *testReply = "GOT it!!! 1 2 3 4\00";
-
 /* ************************************************************************ */
 /*
     Application Set Up
@@ -76,10 +73,6 @@ void setup()
 */
 void loop()
 {
-int sent = 0;
-int rcvd = 0;
-String temp;
-
     yield();
 
     if(toggInterv == ERR_TOGGLE_INTERVAL)
@@ -93,48 +86,7 @@ String temp;
     }
     else
     {
-// function() {
-        rcvd = recvUDP();
-
-        if((rcvd <= UDP_PAYLOAD_SIZE) && (rcvd > 0))
-        {
-            // decode the UDP payload contents
-
-            // act on the contents
-
-            // reply to the contents...
-
-            // a "test" reply, comment out later
-            sent = replyUDP(testReply, strlen(testReply));
-
-            // if debug mute is off then show some info...
-            if(!checkDebugMute())
-            {
-                Serial.println();
-                Serial.println("loop() - rcvd = " + String(rcvd));
-    
-                // NOTE: It was assumed that the UDP packet contained a 
-                // string of characters. The string could contain anything 
-                // (up to udp-defs.h:UDP_PAYLOAD_SIZE bytes in size) even
-                // a JSON string. The string MUST be NULL terminated, there's 
-                // more info in esp8266-udp.cpp
-                temp = String((char *)&readBuffer[0]);
-    
-                Serial.println("loop() - data = " + temp);
-                Serial.println();
-                Serial.println("loop() - sent  = " + String(sent));
-                // a "test" reply, comment or change out later
-                Serial.println("loop() - reply = " + String(testReply));
-                Serial.println();
-                Serial.flush();
-            }
-        } else if(rcvd)
-        {
-            printError(String(__func__), "UDP received packet too long - " + String(rcvd));
-            printError(String(__func__), "Setting error state.");
-            toggInterv = ERR_TOGGLE_INTERVAL;            
-        }
-// } ^function
+        handleUDP();
     }
 }
 

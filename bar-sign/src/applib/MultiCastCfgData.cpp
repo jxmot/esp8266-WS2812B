@@ -14,7 +14,6 @@ MultiCastCfgData::MultiCastCfgData(const char *cfgfile, bool muted): ConfigData(
     muteDebug = muted;
 }
 
-//////////////////////////////////////////////////////////////////////////////
 /*
 */
 void MultiCastCfgData::parseJSON(std::unique_ptr<char[]>& buf)
@@ -29,6 +28,7 @@ void MultiCastCfgData::parseJSON(std::unique_ptr<char[]>& buf)
     }
  
     // https://bblanchon.github.io/ArduinoJson/assistant/
+    // {"addr":"224.0.0.1","port":54321}
     const size_t bufferSize = JSON_OBJECT_SIZE(2) + 30;
     StaticJsonBuffer<bufferSize> jsonBuffer;
 

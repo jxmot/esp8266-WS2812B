@@ -17,7 +17,7 @@ extern "C" {
 
 // if the application configuration is present, and if the debug mute flag is 
 // true then mute debug output
-#define DEBUG_MUTE ((a_cfgdat != NULL) && a_cfgdat->getDebugMute() ? true : false)
+#define DEBUG_MUTE checkDebugMute()
 
 // default serial baud rate, modify as needed
 const int DEFAULT_SERIAL_BAUD = 115200;
@@ -237,7 +237,7 @@ bool isconnected = false;
 */
 void printWiFiCfg()
 {
-    if((a_cfgdat != NULL) && !a_cfgdat->getDebugMute())
+    if(!checkDebugMute())
     {
         Serial.println("getAPCount - " + String(w_cfgdat->getAPCount()));
         Serial.println();
@@ -303,7 +303,7 @@ srvcfg cfg;
 //        seek a better method.
 const String labels[] = {"udp","http","END"};
 
-    if((a_cfgdat != NULL) && !a_cfgdat->getDebugMute())
+    if(!checkDebugMute())
     {
         for(int ix = 0; labels[ix] != "END"; ix++)
         {
@@ -327,7 +327,7 @@ bool connectWiFi(String ssid, String pass)
 conninfo conn;
 
     // debug stuff
-    if((a_cfgdat != NULL) && !a_cfgdat->getDebugMute())
+    if(!checkDebugMute())
     {
         Serial.println("Attempting connection to - ");
         Serial.println("ssid : " + ssid);
@@ -339,7 +339,7 @@ conninfo conn;
     connWiFi = new ConnectWiFi(ssid.c_str(), pass.c_str());
 
     // debug stuff
-    if((a_cfgdat != NULL) && !a_cfgdat->getDebugMute())
+    if(!checkDebugMute())
     {
         Serial.println("connected? - " + String(connWiFi->IsConnected()? "yes" : "no"));
         Serial.println();
@@ -382,8 +382,9 @@ bool bRet = false;
         if(m_cfgdat->getError(errMsg)) printError(func, errMsg);
         else 
         {
+            // debug stuff
             // success, display the config data
-            if((a_cfgdat != NULL) && !a_cfgdat->getDebugMute())
+            if(!checkDebugMute())
             {
                 mcastcfg cfg;
                 if(m_cfgdat->getCfg(cfg)) 
@@ -393,6 +394,7 @@ bool bRet = false;
                 }
                 Serial.flush();
             }
+            // /debug stuff
             bRet = true;
         }
     } else printError(func, errMsg);

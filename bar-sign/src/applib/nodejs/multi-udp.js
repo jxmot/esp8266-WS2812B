@@ -1,6 +1,6 @@
 /* ************************************************************************ */
 /*
-    multi-udp.js - 
+    multi-udp.js - listens and waits for a UDP multi-cast.
 
 */
 // an option argument can specify and alternative client configuration file. 
@@ -21,10 +21,10 @@ const dgram = require('dgram');
 const client = dgram.createSocket('udp4');
 
 client.on('listening', () => {
-      client.setBroadcast(true)
-      client.setMulticastTTL(128); 
-      client.addMembership(addr);
-      console.log('UDP Multi-Cast Client listening on ' + addr + ":" + port);
+    client.setBroadcast(true)
+    client.setMulticastTTL(128); 
+    client.addMembership(addr);
+    console.log('UDP Multi-Cast Client listening on ' + addr + ":" + port);
 });
 
 /*
@@ -35,5 +35,5 @@ client.on('message', (payload, remote) => {
     var message = payload.filter(letter => letter !== 0);
     console.log(`multicast received : [${message}] from ${remote.address}:${remote.port}`);
 });
-
+// all intercaces
 client.bind(port);

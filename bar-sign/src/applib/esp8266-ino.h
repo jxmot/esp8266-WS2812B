@@ -34,6 +34,8 @@ extern int toggInterv;
 
 // support functions - 
 extern void setupStart();
+extern void setupConfig();
+extern void setupInit();
 extern void setupDone();
 
 extern bool setupApp(const String appCfgFile);
@@ -48,6 +50,8 @@ extern void printError(String func, String _errMsg);
 extern bool checkDebugMute();
 
 extern void ready();
+
+extern int handleComm();
 
 // pointers to configuration data objects - 
 extern AppCfgData *a_cfgdat;

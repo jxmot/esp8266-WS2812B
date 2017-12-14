@@ -16,6 +16,10 @@
 extern "C" {
 #endif
 
+// If defined then enable "demonstration mode" operations. This includes the
+// use of demo-configuration files instead of the ones with sensitive info.
+//#define CONFIG_DEMO
+
 // if the application configuration is present, and if the debug mute flag is 
 // true then mute debug output
 #define DEBUG_MUTE checkDebugMute()
@@ -63,6 +67,60 @@ void setupStart()
     Serial.flush();
 }
 
+/*
+*/
+void setupConfig()
+{
+    if(setupApp("/appcfg.dat")) 
+    {
+#ifdef CONFIG_DEMO
+        if(setupWiFi("/wificfg.dat")) 
+        {
+            if(!setupServers("/servercfg.dat")) toggInterv = ERR_TOGGLE_INTERVAL;
+#else
+        // NOTE: The .gitignore in this repo is configured to ignore ALL
+        // files that start with an underscore ('_'). This allows for
+        // versions of these files that contain "sensitive" information
+        // to be ignored by git. The reason that there are two copies of 
+        // this code block is to serve as a gentle reminder that there can
+        // be additional differences between modes. For example, some config 
+        // operations might not be necessary in CONFIG_DEMO.
+        if(setupWiFi("/_wificfg.dat")) 
+        {
+            if(!setupServers("/_servercfg.dat")) toggInterv = ERR_TOGGLE_INTERVAL;
+#endif
+            else if(!setupMultiCast("/multicfg.dat")) toggInterv = ERR_TOGGLE_INTERVAL;
+        } else toggInterv = ERR_TOGGLE_INTERVAL;
+    } else  toggInterv = ERR_TOGGLE_INTERVAL;
+}
+
+/*
+*/
+void setupInit()
+{
+    // if we're not indicating an error the continue with the 
+    // initialization of the UDP functionality...
+    if(toggInterv == TOGGLE_INTERVAL) 
+    {
+        if(!initUDP()) 
+        {
+            printError(String(__func__), "UDP init failed!");
+            toggInterv = ERR_TOGGLE_INTERVAL;
+        } else 
+        {
+            // instantiate a sign object...
+        
+            // running...
+            Serial.println();
+            Serial.println("Running...");
+            Serial.println();
+            Serial.flush();
+
+            // announce that we're ready to any interested clients.
+            ready();
+        }
+    }
+}
 /*
     Print a start up done message to the serial port
 */
@@ -431,6 +489,62 @@ String startupData;
         if(!checkDebugMute()) Serial.println("ready() - " + startupData);
         multiUDP((char *)startupData.c_str(), strlen(startupData.c_str()));
     }
+}
+
+/*
+*/
+// the test data (a string) that we'll send to the server
+char *testReply = "GOT it!!! 1 2 3 4\00";
+
+int handleComm()
+{
+String func = String(__func__);
+
+int sent = 0;
+int rcvd = 0;
+String temp;
+
+    rcvd = recvUDP();
+
+    if((rcvd <= UDP_PAYLOAD_SIZE) && (rcvd > 0))
+    {
+        // decode the UDP payload contents
+
+        // act on the contents
+
+        // reply to the contents...
+
+        // a "test" reply, comment out later
+        sent = replyUDP(testReply, strlen(testReply));
+
+        // if debug mute is off then show some info...
+        if(!checkDebugMute())
+        {
+            Serial.println();
+            Serial.println(func + " - rcvd = " + String(rcvd));
+    
+            // NOTE: It was assumed that the UDP packet contained a 
+            // string of characters. The string could contain anything 
+            // (up to udp-defs.h:UDP_PAYLOAD_SIZE bytes in size) even
+            // a JSON string. The string MUST be NULL terminated, there's 
+            // more info in esp8266-udp.cpp
+            temp = String((char *)&readBuffer[0]);
+    
+            Serial.println(func + " - data = " + temp);
+            Serial.println();
+            Serial.println(func + " - sent  = " + String(sent));
+            // a "test" reply, comment or change out later
+            Serial.println(func + " - reply = " + String(testReply));
+            Serial.println();
+            Serial.flush();
+        }
+    } else if(rcvd)
+    {
+        printError(String(__func__), "UDP received packet too long - " + String(rcvd));
+        printError(String(__func__), "Setting error state.");
+        toggInterv = ERR_TOGGLE_INTERVAL;            
+    }
+    return rcvd;
 }
 
 #ifdef __cplusplus

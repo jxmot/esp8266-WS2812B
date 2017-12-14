@@ -8,8 +8,7 @@
     here. Or if too complex for a shared config file then those service
     specific configs could end up in their own file & object.
 */
-#ifndef SRVCFGDATA_H
-#define SRVCFGDATA_H
+#pragma once
 
 #include <IPAddress.h>
 
@@ -51,5 +50,4 @@ class SrvCfgData : public ConfigData {
         srvcfg *configs[MAX_SRVCFG];
 };
 
-#endif  // SRVCFGDATA_H
 

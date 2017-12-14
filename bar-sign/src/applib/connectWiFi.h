@@ -4,8 +4,7 @@
     problem occurs during the connection attempt this class will retry for 
     no more than MAX_ATTEMPTS times.
 */
-#ifndef CONNECTWIFI_H
-#define CONNECTWIFI_H
+#pragma once
 
 // For storing the MAC address raw and
 // as ASCII in a character array.
@@ -49,7 +48,4 @@ class ConnectWiFi {
 
         conninfo    currwifi;
 };
-
-
-#endif // CONNECTWIFI_H
 

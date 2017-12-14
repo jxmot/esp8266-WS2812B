@@ -78,8 +78,6 @@ void loop()
 {
 int sent = 0;
 int rcvd = 0;
-int ix;
-
 String temp;
 
     yield();

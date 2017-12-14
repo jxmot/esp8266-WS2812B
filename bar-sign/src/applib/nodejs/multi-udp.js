@@ -20,7 +20,7 @@ const port = cfg.port;
 const dgram = require('dgram');
 const client = dgram.createSocket('udp4');
 
-client.on('listening', function () {
+client.on('listening', () => {
       client.setBroadcast(true)
       client.setMulticastTTL(128); 
       client.addMembership(addr);

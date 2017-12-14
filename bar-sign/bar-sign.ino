@@ -65,9 +65,11 @@ void setup()
             // running...
             Serial.println();
             Serial.println("Running...");
+            Serial.println();
+            Serial.flush();
 
             // announce that we're ready to any interested clients.
-            multiUDP();
+            ready();
         }
     }
 }
@@ -91,6 +93,8 @@ void loop()
     else
     {
         handleUDP();
+
+        //handleDisplay();
     }
 }
 

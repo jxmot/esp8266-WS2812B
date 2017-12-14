@@ -9,8 +9,7 @@
         moved LED toggle interval defines to this file - update the
         ESP8266-udp repo!
 */
-#ifndef ESP8266INO_H
-#define ESP8266INO_H
+#pragma once
 
 #include "AppCfgData.h"
 #include "WifiCfgData.h"
@@ -52,6 +51,8 @@ extern bool checkDebugMute();
 extern void ready();
 
 extern int handleComm();
+//extern void stopDisplay();
+//extern void handleDisplay();
 
 // pointers to configuration data objects - 
 extern AppCfgData *a_cfgdat;
@@ -65,6 +66,3 @@ extern ConnectWiFi *connWiFi;
 #ifdef __cplusplus
 }
 #endif
-
-#endif
-

@@ -15,25 +15,12 @@ extern "C" {
 int replyUDP(char *payload, int len);
 int recvUDP();
 
-// The size (in bytes) of the UDP data that we're expecting 
-// to exchange with the server. The +1 is a place holder 
-// for a NULL if a string uses the full capacity of the
-// buffer.
-//
-// NOTE: Things seem to work the best when the READ and
-// WRITE sizes are the same.
-#define UDP_PAYLOAD_SIZE_READ (UDP_PAYLOAD_SIZE + 1)
-#define UDP_PAYLOAD_SIZE_WRITE (UDP_PAYLOAD_SIZE + 1)
-
 // read & write buffers
 unsigned char readBuffer[UDP_PAYLOAD_SIZE_READ];
 unsigned char writeBuffer[UDP_PAYLOAD_SIZE_WRITE];
 
 // Arduino UDP object
 WiFiUDP udp;
-
-// a single server configuration
-srvcfg udpServer;
 
 /* ************************************************************************ */
 /*
@@ -42,6 +29,9 @@ srvcfg udpServer;
 */
 int initUDP()
 {
+// a single server configuration
+srvcfg udpServer;
+
 bool success = false;
 int iRet = 0;
 
@@ -120,6 +110,7 @@ int readLen = 0;
 }
 
 /*
+    Send a payload to a multi-cast address
 */
 int multiUDP(char *payload, int len)
 {

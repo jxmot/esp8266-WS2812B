@@ -2,8 +2,7 @@
 /*
     esp8266-udp.h - UDP support for the associated ino file.
 */
-#ifndef ESP8266UDP_H
-#define ESP8266UDP_H
+#pragma once
 
 #include "udp-defs.h"
 
@@ -24,6 +23,4 @@ extern unsigned char writeBuffer[];
 #ifdef __cplusplus
 }
 #endif
-
-#endif  // ESP8266UDP_H
 

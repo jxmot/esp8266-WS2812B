@@ -24,7 +24,7 @@ client.on('listening', function () {
       client.setBroadcast(true)
       client.setMulticastTTL(128); 
       client.addMembership(addr);
-      console.log('UDP Client listening on ' + addr + ":" + port);
+      console.log('UDP Multi-Cast Client listening on ' + addr + ":" + port);
 });
 
 /*

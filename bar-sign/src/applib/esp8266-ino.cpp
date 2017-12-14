@@ -76,11 +76,9 @@ void setupDone()
 
 void initLED()
 {
-    // let's blink the LED from within loop()
     pinMode(LED_BUILTIN, OUTPUT);
     delay(10);
     digitalWrite(LED_BUILTIN, HIGH);
-
     obLEDinUse = true;
 }
 

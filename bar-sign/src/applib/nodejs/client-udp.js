@@ -72,7 +72,7 @@ client.on('message', (payload, remote) => {
     // console.log(`client got reply : [${payload.toString().trim()}] from ${remote.address}:${remote.port}`);
     
     // the correct way to extract a string from the payload is this - 
-    var message = payload.filter(letter => letter != 0);
+    var message = payload.filter(letter => letter !== 0);
     console.log(`client got reply : [${message}] from ${remote.address}:${remote.port}`);
     
     if(cfg.repeat === undefined) process.exit();

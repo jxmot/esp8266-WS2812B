@@ -117,7 +117,7 @@ String temp;
 
 
 /*
-    Send a UDP packet...
+    Reply with a UDP packet...
 */
 int replyUDP(char *payload, int len)
 {
@@ -173,6 +173,31 @@ int readLen = 0;
 // to noisy...
 //    if(!checkDebugMute()) Serial.println("recvUDP() - packetLen = " + String(packetLen) + "  readLen = " + readLen);
     return readLen;
+}
+
+/*
+*/
+int multiUDP()
+{
+
+mcastcfg cfg;
+conninfo conn;
+String startupData;
+
+    if(m_cfgdat->getCfg(cfg))
+    {
+        if(connWiFi->GetConnInfo(&conn)) 
+        {
+            udp.beginPacketMulticast(cfg.ipaddr, cfg.port, WiFi.localIP());
+
+            startupData = "{\"hostname\":\"" + conn.hostname + "\",\"appname\":\"" + a_cfgdat->getAppName() + "\"}";
+
+            if(!checkDebugMute()) Serial.println("multiUDP() - " + startupData);
+
+            udp.write(startupData.c_str(), strlen(startupData.c_str()));
+            udp.endPacket();
+        }
+    }
 }
 
 #ifdef __cplusplus

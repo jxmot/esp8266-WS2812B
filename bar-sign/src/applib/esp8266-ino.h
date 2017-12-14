@@ -15,6 +15,7 @@
 #include "AppCfgData.h"
 #include "WifiCfgData.h"
 #include "SrvCfgData.h"
+#include "MultiCastCfgData.h"
 #include "connectWiFi.h"
 
 // The on-board LED is used for indicating the post-setup state. The LED 
@@ -38,6 +39,7 @@ extern void setupDone();
 extern bool setupApp(const String appCfgFile);
 extern bool setupWiFi(const String wifiCfgFile);
 extern bool setupServers(const String srvCfgFile);
+extern bool setupMultiCast(const String mcastCfgFile);
 
 extern bool toggleLED();
 
@@ -49,6 +51,7 @@ extern bool checkDebugMute();
 extern AppCfgData *a_cfgdat;
 extern WifiCfgData *w_cfgdat;
 extern SrvCfgData *s_cfgdat;
+extern MultiCastCfgData *m_cfgdat;
 
 // pointer to the WiFi connection object -
 extern ConnectWiFi *connWiFi;

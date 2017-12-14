@@ -5,6 +5,7 @@
 #include "AppCfgData.h"
 #include "WifiCfgData.h"
 #include "SrvCfgData.h"
+#include "MultiCastCfgData.h"
 
 #include "connectWiFi.h"
 
@@ -40,6 +41,7 @@ bool obLEDinUse = false;
 AppCfgData *a_cfgdat = NULL;
 WifiCfgData *w_cfgdat = NULL;
 SrvCfgData *s_cfgdat = NULL;
+MultiCastCfgData *m_cfgdat = NULL;
 
 // error message string
 String errMsg;
@@ -360,6 +362,43 @@ conninfo conn;
     // /debug stuff
 
     return connWiFi->IsConnected();
+}
+
+bool setupMultiCast(const String mcastCfgFile)
+{
+String func = String(__func__);
+bool bRet = false;
+
+    // get the config data...
+    m_cfgdat = new MultiCastCfgData((const char *)mcastCfgFile.c_str(), DEBUG_MUTE);
+
+    // check for errors
+    if(!m_cfgdat->getError(errMsg)) 
+    {
+        // success, parse the JSON string
+        m_cfgdat->parseFile();
+
+        // check for errors
+        if(m_cfgdat->getError(errMsg)) printError(func, errMsg);
+        else 
+        {
+            // success, display the config data
+            if((a_cfgdat != NULL) && !a_cfgdat->getDebugMute())
+            {
+                mcastcfg cfg;
+                if(m_cfgdat->getCfg(cfg)) 
+                {
+                    Serial.println("Multicast addr - " + cfg.addr);
+                    Serial.println("Multicast port - " + String(cfg.port));
+                }
+                Serial.flush();
+            }
+            bRet = true;
+        }
+    } else printError(func, errMsg);
+
+    // return the config-read status, true = success
+    return bRet;
 }
 
 /*

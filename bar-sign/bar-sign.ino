@@ -31,8 +31,6 @@ void setup()
         if(setupWiFi("/wificfg.dat")) 
         {
             if(!setupServers("/servercfg.dat")) toggInterv = ERR_TOGGLE_INTERVAL;
-            else if(!setupMultiCast("/multicfg.dat")) toggInterv = ERR_TOGGLE_INTERVAL;
-        } else toggInterv = ERR_TOGGLE_INTERVAL;
 #else
         // NOTE: The .gitignore in this repo is configured to ignore ALL
         // files that start with an underscore ('_'). This allows for
@@ -44,9 +42,9 @@ void setup()
         if(setupWiFi("/_wificfg.dat")) 
         {
             if(!setupServers("/_servercfg.dat")) toggInterv = ERR_TOGGLE_INTERVAL;
+#endif
             else if(!setupMultiCast("/multicfg.dat")) toggInterv = ERR_TOGGLE_INTERVAL;
         } else toggInterv = ERR_TOGGLE_INTERVAL;
-#endif
     } else  toggInterv = ERR_TOGGLE_INTERVAL;
 
     // initial setup is complete, wrap up and continue...
@@ -60,14 +58,18 @@ void setup()
         {
             printError(String(__func__), "UDP init failed!");
             toggInterv = ERR_TOGGLE_INTERVAL;
-        } else multiUDP();
+        } else 
+        {
+            // instantiate a sign object...
+        
+            // running...
+            Serial.println();
+            Serial.println("Running...");
+
+            // announce that we're ready to any interested clients.
+            multiUDP();
+        }
     }
-
-    // instantiate a sign object...
-
-    // running...
-    Serial.println();
-    Serial.println("Running...");
 }
 
 /*

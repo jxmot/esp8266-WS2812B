@@ -10,6 +10,7 @@
 #include "connectWiFi.h"
 
 #include "esp8266-ino.h"
+#include "esp8266-udp.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -413,6 +414,23 @@ bool checkDebugMute()
 {
     if(a_cfgdat != NULL) return a_cfgdat->getDebugMute();
     return true;
+}
+
+/*
+    send a UDP multi-cast to any interested clients
+*/
+void ready()
+{
+conninfo conn;
+String startupData;
+
+    // connected?
+    if(connWiFi->GetConnInfo(&conn)) 
+    {
+        startupData = "{\"hostname\":\"" + conn.hostname + "\",\"appname\":\"" + a_cfgdat->getAppName() + "\"}";
+        if(!checkDebugMute()) Serial.println("ready() - " + startupData);
+        multiUDP((char *)startupData.c_str(), strlen(startupData.c_str()));
+    }
 }
 
 #ifdef __cplusplus

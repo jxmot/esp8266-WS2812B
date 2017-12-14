@@ -47,6 +47,8 @@ extern void printError(String func, String _errMsg);
 
 extern bool checkDebugMute();
 
+extern void ready();
+
 // pointers to configuration data objects - 
 extern AppCfgData *a_cfgdat;
 extern WifiCfgData *w_cfgdat;

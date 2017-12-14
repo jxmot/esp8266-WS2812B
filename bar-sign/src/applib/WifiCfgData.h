@@ -7,8 +7,7 @@
         2) password
 
 */
-#ifndef WIFICFGDATA_H
-#define WIFICFGDATA_H
+#pragma once
 
 #include "ConfigData.h"
 
@@ -51,6 +50,4 @@ class WifiCfgData : public ConfigData {
         int apcount;
         apoint aps[MAX_APOINTS];
 };
-
-#endif  // WIFICFGDATA_H
 

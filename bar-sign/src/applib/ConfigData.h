@@ -3,8 +3,7 @@
     ConfigData.h - This is the base class for all of the configuration 
     classes. 
 */
-#ifndef CONFIGDATA_H
-#define CONFIGDATA_H
+#pragma once
 
 #include <memory>
 #include <WString.h>
@@ -34,5 +33,4 @@ class ConfigData {
         String errmsg;
 };
 
-#endif // CONFIGDATA_H
 

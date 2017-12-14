@@ -8,8 +8,7 @@
         3) Text message (be careful to not use too much memory!) content.
 
 */
-#ifndef APPCFGDATA_H
-#define APPCFGDATA_H
+#pragma once
 
 // Configuration Object base class
 #include "ConfigData.h"
@@ -38,6 +37,4 @@ class AppCfgData : public ConfigData {
         String appname;
         bool debugmute;
 };
-
-#endif  // APPCFGDATA_H
 

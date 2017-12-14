@@ -24,9 +24,6 @@ client.on('listening', function () {
       client.setBroadcast(true)
       client.setMulticastTTL(128); 
       client.addMembership(addr);
-
-      var address = client.address();
-      //console.log('UDP Client listening on ' + address.address + ":" + address.port);
       console.log('UDP Client listening on ' + addr + ":" + port);
 });
 
@@ -34,7 +31,6 @@ client.on('listening', function () {
     Reply Received Event Handler
 */
 client.on('message', (payload, remote) => {
-
     // the correct way to extract a string from the payload is this - 
     var message = payload.filter(letter => letter !== 0);
     console.log(`multicast received : [${message}] from ${remote.address}:${remote.port}`);

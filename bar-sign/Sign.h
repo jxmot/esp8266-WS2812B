@@ -20,4 +20,6 @@ class Sign
         NeoPixelAnimator *animations;
 
         void initStrip(int pxCount = DEFAULT_PIXEL_COUNT);
+
+
 };

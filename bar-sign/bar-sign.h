@@ -1,17 +1,15 @@
 
-
 #pragma once
 
-#include "Sign.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-class BarSign
-{
-    public:
-        BarSign();
-        ~BarSign();
+extern void startSign();
+extern bool configChannels();
+extern bool configScripts();
 
-    private:
-        bool configChannels();
-        bool configScripts();
-};
+#ifdef __cplusplus
+}
+#endif
 

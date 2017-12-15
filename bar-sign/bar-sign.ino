@@ -32,6 +32,8 @@ void setup()
     setupInit();
     // initial setup is complete, wrap up and continue...
     setupDone();
+    // get the sign mcp running...
+    //startSign();
 }
 
 /*

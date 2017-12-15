@@ -1,32 +1,39 @@
-#include "bar-sign.h"
 
-BarSign::BarSign()
+// required include files...
+#include "src/applib/esp8266-ino.h"
+#include "src/applib/esp8266-udp.h"
+
+#include "bar-sign.h"
+#include "Sign.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void startSign()
 {
     // initialize sign
 
-    // read config - 
+    // read config & init - 
     //      channel settings
     //      scripts
 
     // begin initial state
 }
 
-bool BarSign::configChannels()
+bool configChannels()
 {
     // read channel config and save
     // if successfull return true
-};
+}
 
-bool BarSign::configScripts()
+bool configScripts()
 {
     // read scripts config and save
     // if successfull return true
-};
+}
 
-/*
-bool BarSign::
-bool BarSign::
-bool BarSign::
-
-*/
+#ifdef __cplusplus
+}
+#endif
 

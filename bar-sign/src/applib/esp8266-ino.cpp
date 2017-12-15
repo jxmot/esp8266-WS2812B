@@ -12,6 +12,8 @@
 #include "esp8266-ino.h"
 #include "esp8266-udp.h"
 
+#include "bar-sign.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -3,12 +3,15 @@
 #include "src/applib/esp8266-ino.h"
 #include "src/applib/esp8266-udp.h"
 
-#include "bar-sign.h"
 #include "Sign.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+bool configChannels();
+bool configScripts();
+
 
 void startSign()
 {

@@ -6,7 +6,6 @@ extern "C" {
 #endif
 
 extern void startSign();
-//extern bool configChannels();
 //extern bool configScripts();
 
 #ifdef __cplusplus

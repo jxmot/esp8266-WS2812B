@@ -16,6 +16,7 @@
 
 // required include files...
 #include "esp8266-ino.h"
+#include "bar-sign.h"
 
 /* ************************************************************************ */
 /*
@@ -32,7 +33,7 @@ void setup()
     // initial setup is complete, wrap up and continue...
     setupDone();
     // get the sign mcp running...
-    //startSign();
+    startSign();
 }
 
 /*

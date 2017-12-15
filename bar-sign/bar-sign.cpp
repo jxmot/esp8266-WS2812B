@@ -7,28 +7,18 @@
 extern "C" {
 #endif
 
-bool configChannels();
 bool configScripts();
 
+Sign *barSign = NULL;
 
 void startSign()
 {
     // initialize sign
-
-    // read config & init - 
-    //      channel settings
-    configChannels();
-
-    //      scripts
+    barSign = new Sign("/signcfg.dat", checkDebugMute());
 
     // begin initial state
 }
 
-bool configChannels()
-{
-    // read channel config and save
-    // if successfull return true
-}
 
 bool configScripts()
 {

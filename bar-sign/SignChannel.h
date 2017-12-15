@@ -15,15 +15,16 @@ enum ChannelID
     allChannels
 };
 
-struct Channel 
+class Channel 
 {
-    unsigned int id = channel_none;
-
-    RgbColor defaultColor = DEFAULT_COLOR;
-    RgbColor currentColor = DEFAULT_COLOR;
-    RgbColor nextColor    = DEFAULT_COLOR;
-
-    RgbColor colorList[MAX_COLOR_STEPS];
+    public:
+        unsigned int id = channel_none;
+    
+        RgbColor defaultColor = DEFAULT_COLOR;
+        RgbColor currentColor = DEFAULT_COLOR;
+        RgbColor nextColor    = DEFAULT_COLOR;
+    
+        RgbColor colorList[MAX_COLOR_STEPS];
 };
 
 class SignChannel 

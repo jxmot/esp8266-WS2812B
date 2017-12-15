@@ -1,8 +1,6 @@
 
 // required include files...
-#include "src/applib/esp8266-ino.h"
-#include "src/applib/esp8266-udp.h"
-
+#include "esp8266-ino.h"
 #include "Sign.h"
 
 #ifdef __cplusplus
@@ -19,6 +17,8 @@ void startSign()
 
     // read config & init - 
     //      channel settings
+    configChannels();
+
     //      scripts
 
     // begin initial state

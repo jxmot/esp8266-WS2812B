@@ -11,11 +11,13 @@
 */
 #pragma once
 
-#include "AppCfgData.h"
-#include "WifiCfgData.h"
-#include "SrvCfgData.h"
-#include "MultiCastCfgData.h"
-#include "connectWiFi.h"
+#include "src/applib/AppCfgData.h"
+#include "src/applib/WifiCfgData.h"
+#include "src/applib/SrvCfgData.h"
+#include "src/applib/MultiCastCfgData.h"
+#include "src/applib/connectWiFi.h"
+
+#include "esp8266-udp.h"
 
 // The on-board LED is used for indicating the post-setup state. The LED 
 // will be toggled using one of two intervals (OFF/ON). The intent is to

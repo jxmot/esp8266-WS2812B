@@ -6,7 +6,6 @@
 #include <WiFiUdp.h>
 
 #include "esp8266-ino.h"
-#include "udp-defs.h"
 
 #ifdef __cplusplus
 extern "C" {

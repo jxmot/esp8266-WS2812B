@@ -15,8 +15,7 @@
 */
 
 // required include files...
-#include "src/applib/esp8266-ino.h"
-#include "src/applib/esp8266-udp.h"
+#include "esp8266-ino.h"
 
 /* ************************************************************************ */
 /*

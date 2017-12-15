@@ -2,15 +2,7 @@
 /*
     esp8266-ino.cpp - support functions for the associated ino file.
 */
-#include "AppCfgData.h"
-#include "WifiCfgData.h"
-#include "SrvCfgData.h"
-#include "MultiCastCfgData.h"
-
-#include "connectWiFi.h"
-
 #include "esp8266-ino.h"
-#include "esp8266-udp.h"
 
 #include "bar-sign.h"
 

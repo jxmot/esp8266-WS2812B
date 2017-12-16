@@ -10,18 +10,17 @@ Sign::Sign(const char *cfgfile, bool muted/* = true*/)
     strip = NULL;
     animations = NULL;
 
+/*
     configSign(cfgfile);
 
     configChannels("/channelcfg.dat");
-
-/*
+*/
     // read config & init - 
     if(configSign(cfgfile))
     {
         // channel settings
         configChannels((const char *)s_config.channcfg.c_str());
     }
-*/
     //      scripts
 
 }

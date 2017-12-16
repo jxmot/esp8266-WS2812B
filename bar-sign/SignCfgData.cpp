@@ -6,7 +6,6 @@
 #include "SignCfgData.h"
 #include <ArduinoJson.h>
 
-
 //////////////////////////////////////////////////////////////////////////////
 /*
 */
@@ -14,7 +13,7 @@ SignCfgData::SignCfgData(const char *cfgfile, bool muted): ConfigData(cfgfile)
 {
     muteDebug = muted;
 
-    if(!muteDebug) Serial.println("SignCfgData - constructor");
+    if(!muteDebug) Serial.println(String(__func__) + " - constructor");
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -25,14 +24,14 @@ void SignCfgData::parseJSON(std::unique_ptr<char[]>& buf)
     if(!muteDebug)
     {
         Serial.println();
-        Serial.println("SignCfgData parsing JSON - ");
+        Serial.println(String(__func__) + " parsing JSON - ");
         Serial.println(buf.get());
         Serial.println();
         Serial.flush();
-    } else Serial.println("SignCfgData parsing JSON !!!!!");
+    }
  
     // https://bblanchon.github.io/ArduinoJson/assistant/
-    // {"channels":4,"channcfg":"/channel.cfg","leftchann": 0}
+    // {"channels":4,"channcfg":"/channelcfg.dat","leftchann": 0}
     const size_t bufferSize = JSON_OBJECT_SIZE(3) + 101;
     StaticJsonBuffer<bufferSize> jsonBuffer;
 

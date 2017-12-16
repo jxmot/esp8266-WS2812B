@@ -2,7 +2,7 @@
 
 #include "SignColors.h"
 
-#define MAX_COLOR_STEPS 8
+#define MAX_COLOR_STEPS 16
 
 enum ChannelID
 {

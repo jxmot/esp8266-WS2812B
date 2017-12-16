@@ -75,15 +75,16 @@ bool bRet = false;
         // files reasonably small. 
         if(cfgData.size() > MAX_FILE_SIZE) 
         {
-            cfgData.close();
-
+            errmsg = "Configuration file size is too large - " + String(cfgData.size()) + " > " + String(MAX_FILE_SIZE);
             error = -3;
-            errmsg = "Configuration file size is too large";
+
+            cfgData.close();
         }
         else
         {
             // Allocate a buffer to store contents of the file.
             std::unique_ptr<char[]> buf(new char[cfgData.size()]);
+            memset(buf.get(), 0, cfgData.size());
 
             // https://bblanchon.github.io/ArduinoJson/
             // 
@@ -93,6 +94,10 @@ bool bRet = false;
             cfgData.readBytes(buf.get(), cfgData.size());
             //Serial.println(cfgData.size());
             //Serial.println(buf.get());
+
+// NOTE: modify all other repos!!!!
+            cfgData.close();
+
             parseJSON(buf);
             error = 0;
             bRet = true;

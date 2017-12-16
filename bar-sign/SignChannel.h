@@ -19,7 +19,11 @@ class Channel
 {
     public:
         unsigned int id = channel_none;
-    
+        String name = "";
+        String action = "osc";
+        int duration = 5000;
+        int end_hang = 500;
+
         RgbColor defaultColor = DEFAULT_COLOR;
         RgbColor currentColor = DEFAULT_COLOR;
         RgbColor nextColor    = DEFAULT_COLOR;

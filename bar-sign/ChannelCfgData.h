@@ -5,7 +5,9 @@
 */
 #pragma once
 
+#include "vector"
 #include "src/applib/ConfigData.h"
+
 #include "SignChannel.h"
 
 class channelcfg
@@ -14,8 +16,8 @@ class channelcfg
         int index = -1;
         String name = "n/a";
         String action = "n/a";
-        int duration = 5000;
-        int end_hang = 500;
+        int duration = -1;
+        int end_hang = -1;
         int default_color[3] = {0,0,0};
         int color_list[MAX_COLOR_STEPS][3];
 };
@@ -40,6 +42,8 @@ class ChannelCfgData : public ConfigData {
 
     private:
         bool muteDebug;
-        channelcfg config;
+        //channelcfg config;
+
+        std::vector<channelcfg> v_channels;
 };
 

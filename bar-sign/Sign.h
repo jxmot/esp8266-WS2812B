@@ -6,6 +6,7 @@
 #include <NeoPixelAnimator.h>
 
 #include "SignCfgData.h"
+#include "ChannelCfgData.h"
 
 #include "SignChannel.h"
 
@@ -20,19 +21,20 @@ class Sign
     private:
         bool muteDebug;
 
-        SignCfgData *cfgdat;
+        SignCfgData *signcfgdat;
+        ChannelCfgData *chancfgdat;
 
-        signcfg config;
+        signcfg s_config;
+        channelcfg c_config;
 
         bool configSign(const char *cfgfile);
         void printSignCfg();
 
         bool configChannels(const char *cfgfile);
+        void printChanCfg();
 
         NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod> *strip;
         NeoPixelAnimator *animations;
 
         void initStrip(int pxCount = DEFAULT_PIXEL_COUNT);
-
-
 };

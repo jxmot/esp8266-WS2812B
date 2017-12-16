@@ -10,13 +10,18 @@ Sign::Sign(const char *cfgfile, bool muted/* = true*/)
     strip = NULL;
     animations = NULL;
 
+    configSign(cfgfile);
+
+    configChannels("/channelcfg.dat");
+
+/*
     // read config & init - 
     if(configSign(cfgfile))
     {
         // channel settings
-        configChannels(config.channcfg);
+        configChannels((const char *)s_config.channcfg.c_str());
     }
-
+*/
     //      scripts
 
 }
@@ -25,7 +30,7 @@ Sign::~Sign()
 {
     delete strip;
     delete animations;
-    delete cfgdat;
+    delete signcfgdat;
 }
 
 bool Sign::configSign(const char *cfgfile)
@@ -35,19 +40,19 @@ String func = String(__func__);
 bool bRet = false;
 
     // get the config data...
-    cfgdat = new SignCfgData(cfgfile, muteDebug);
+    signcfgdat = new SignCfgData(cfgfile, muteDebug);
 
     // check for errors
-    if(!cfgdat->getError(errMsg)) 
+    if(!signcfgdat->getError(errMsg)) 
     {
         // success, parse the JSON string
-        cfgdat->parseFile();
+        signcfgdat->parseFile();
 
         // check for errors
-        if(cfgdat->getError(errMsg)) printError(func, errMsg);
+        if(signcfgdat->getError(errMsg)) printError(func, errMsg);
         else 
         {
-            cfgdat->getSignCfg(config);
+            signcfgdat->getSignCfg(s_config);
 
             // success, display the config data
             printSignCfg();
@@ -63,19 +68,52 @@ void Sign::printSignCfg()
     if(!muteDebug)
     {
         Serial.println(String(__func__) + " - config = ");
-        Serial.println("    channels  : " + String(config.channels));
-        Serial.println("    channcfg  : " + config.channcfg);
-        Serial.println("    leftchann : " + String(config.leftchann));
+        Serial.println("    channels  : " + String(s_config.channels));
+        Serial.println("    channcfg  : " + s_config.channcfg);
+        Serial.println("    leftchann : " + String(s_config.leftchann));
         Serial.println();
     }
 }
 
 bool Sign::configChannels(const char *cfgfile)
 {
-    // read channel config and save
-    // if successfull return true
+String errMsg;
+String func = String(__func__);
+bool bRet = false;
+
+    // get the config data...
+    chancfgdat = new ChannelCfgData(cfgfile, muteDebug);
+
+    // check for errors
+    if(!chancfgdat->getError(errMsg)) 
+    {
+        // success, parse the JSON string
+        chancfgdat->parseFile();
+
+        // check for errors
+        if(chancfgdat->getError(errMsg)) printError(func, errMsg);
+        else 
+        {
+            chancfgdat->getChanCfg(c_config);
+
+            // success, display the config data
+            printChanCfg();
+            bRet = true;
+        }
+    } else printError(func, errMsg);
+
+    return bRet;
 }
 
+void Sign::printChanCfg()
+{
+    if(!muteDebug)
+    {
+        Serial.println(String(__func__) + " - config = ");
+//        Serial.println("    channels  : " + String(config.channels));
+        Serial.println();
+    }
+}
 
 void Sign::initStrip(int pxCount/* = DEFAULT_PIXEL_COUNT*/)
 {

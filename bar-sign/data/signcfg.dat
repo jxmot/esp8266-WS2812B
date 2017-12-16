@@ -1,5 +1,5 @@
 {
     "channels":4,
-    "channcfg":"/channel.cfg",
+    "channcfg":"/channelcfg.dat",
     "leftchann": 0
 }

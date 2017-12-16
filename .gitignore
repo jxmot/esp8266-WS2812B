@@ -10,6 +10,7 @@ _*
 *.log
 *.txt
 *.bat
+#*.zip
 error_log
 # php.ini
 *.ini

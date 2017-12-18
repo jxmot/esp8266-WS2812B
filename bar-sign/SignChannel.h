@@ -1,5 +1,7 @@
 #pragma once
 
+#include "vector"
+
 #include "SignColors.h"
 
 #define MAX_COLOR_STEPS 16
@@ -18,23 +20,24 @@ enum ChannelID
 class Channel 
 {
     public:
-        unsigned int id = channel_none;
+        unsigned int index = channel_none;
         String name = "";
-        String action = "osc";
-        int duration = 5000;
-        int end_hang = 500;
+        String action = "";
+        int duration = -1;
+        int end_hang = -1;
 
-        RgbColor defaultColor = DEFAULT_COLOR;
-        RgbColor currentColor = DEFAULT_COLOR;
-        RgbColor nextColor    = DEFAULT_COLOR;
-    
-        RgbColor colorList[MAX_COLOR_STEPS];
+        RgbColor default_color = DEFAULT_COLOR;
+        RgbColor current_color = DEFAULT_COLOR;
+        RgbColor next_color    = DEFAULT_COLOR;
+
+//        RgbColor colorList[MAX_COLOR_STEPS];
+        std::vector<RgbColor> color_list;
 };
 
 class SignChannel 
 {
     public:
-        SignChannel(ChannelID chid){chann.id = chid;};
+        SignChannel();
         ~SignChannel();
 
     private:

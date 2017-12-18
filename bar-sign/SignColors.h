@@ -17,5 +17,7 @@ enum ColorSatLevel
 
 #define COLOR_BLACK RgbColor(colorSat_0, colorSat_0, colorSat_0)
 
+#define MAKERGB(rgb) RgbColor(rgb[0], rgb[1], rgb[2])
+
 #define DEFAULT_COLOR COLOR_BLACK
 

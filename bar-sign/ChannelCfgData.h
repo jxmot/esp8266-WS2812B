@@ -9,6 +9,8 @@
 #include "src/applib/ConfigData.h"
 
 #include "SignChannel.h"
+#define _SIGNCHANNEL
+
 
 class channelcfg
 {
@@ -38,12 +40,15 @@ class ChannelCfgData : public ConfigData {
         The other place is in ChannelCfgData.cpp
     */
     public:
+        int  getChanQty();
         bool getChanCfg(channelcfg &cfgout);
 
     private:
         bool muteDebug;
-        //channelcfg config;
-
+#ifndef _SIGNCHANNEL
         std::vector<channelcfg> v_channels;
+#else
+        std::vector<Channel> v_channels;
+#endif
 };
 

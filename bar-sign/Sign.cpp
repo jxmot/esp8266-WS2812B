@@ -93,11 +93,11 @@ bool bRet = false;
         if(chancfgdat->getError(errMsg)) printError(func, errMsg);
         else 
         {
-            chancfgdat->getChanCfg(c_config);
-
-            // success, display the config data
-            printChanCfg();
-            bRet = true;
+            if(chancfgdat->getChanQty() > 0)
+            {
+                printChanCfg();
+                bRet = true;
+            }
         }
     } else printError(func, errMsg);
 

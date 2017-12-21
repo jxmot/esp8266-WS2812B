@@ -93,6 +93,21 @@ int  ChannelCfgData::getChanQty()
     return v_channels.size();
 }
 
+uint16_t ChannelCfgData::getDuration(int idx)
+{
+    return v_channels[idx].duration;
+}
+
+RgbColor ChannelCfgData::getCurrColor(int idx)
+{
+    return v_channels[idx].current_color;
+}
+
+RgbColor ChannelCfgData::getNextColor(int idx)
+{
+    return v_channels[idx].next_color;
+}
+
 //////////////////////////////////////////////////////////////////////////////
 /*
     This is one of the places where you would customize this class to be 
@@ -100,10 +115,18 @@ int  ChannelCfgData::getChanQty()
     
     Another place is in ChannelCfgData.h
 */
+#ifndef _SIGNCHANNEL
 bool ChannelCfgData::getChanCfg(channelcfg &cfgout)
 {
     return true;
 }
+#else
+bool ChannelCfgData::getChanCfg(int index, Channel &cfgout)
+{
+    cfgout = v_channels[index];
+    return true;
+}
+#endif
 
 
 

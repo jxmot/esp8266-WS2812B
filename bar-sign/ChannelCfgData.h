@@ -18,7 +18,7 @@ class channelcfg
         int index = -1;
         String name = "n/a";
         String action = "n/a";
-        int duration = -1;
+        uint16_t duration = 0;
         int end_hang = -1;
         int default_color[3] = {0,0,0};
         int color_list[MAX_COLOR_STEPS][3];
@@ -40,9 +40,16 @@ class ChannelCfgData : public ConfigData {
         The other place is in ChannelCfgData.cpp
     */
     public:
-        int  getChanQty();
-        bool getChanCfg(channelcfg &cfgout);
+        int getChanQty();
+        uint16_t getDuration(int idx);
+        RgbColor getCurrColor(int idx);
+        RgbColor getNextColor(int idx);
 
+#ifndef _SIGNCHANNEL
+        bool getChanCfg(channelcfg &cfgout);
+#else
+        bool getChanCfg(int index, Channel &cfgout);
+#endif
     private:
         bool muteDebug;
 #ifndef _SIGNCHANNEL

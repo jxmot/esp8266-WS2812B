@@ -29,6 +29,7 @@ Sign::~Sign()
 {
     delete strip;
     delete animations;
+    delete chancfgdat;
     delete signcfgdat;
 }
 
@@ -52,6 +53,8 @@ bool bRet = false;
         else 
         {
             signcfgdat->getSignCfg(s_config);
+
+            initStrip(s_config.channels);
 
             // success, display the config data
             printSignCfg();
@@ -114,13 +117,34 @@ void Sign::printChanCfg()
     }
 }
 
+/* ************************************************************************* */ 
+
 void Sign::initStrip(int pxCount/* = DEFAULT_PIXEL_COUNT*/)
 {
     if(strip != NULL) delete strip;
 
     strip = new NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>(pxCount);
+    animations = new NeoPixelAnimator(pxCount);
 
     // this resets all the neopixels to an off state
     strip->Begin();
     strip->Show();
 }
+
+AnimUpdateCallback Sign::animChannel(const AnimationParam& param)
+{
+    RgbColor newcolor = RgbColor::LinearBlend(chancfgdat->getCurrColor(param.index),
+                                              chancfgdat->getNextColor(param.index),
+                                              param.progress);
+
+    strip->SetPixelColor(param.index, newcolor);
+}
+
+void Sign::startChannel(uint16_t idx)
+{
+/*
+    strip->SetPixelColor(idx, COLOR_BLACK);
+    animations->StartAnimation(idx, chancfgdat->getDuration(idx), animChannel);
+*/
+}
+

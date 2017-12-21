@@ -18,6 +18,11 @@ class Sign
         Sign(const char *cfgfile, bool muted = true);
         ~Sign();
 
+        void startChannel(uint16_t idx);
+
+        NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod> *strip;
+        NeoPixelAnimator *animations;
+
     private:
         bool muteDebug;
 
@@ -25,7 +30,7 @@ class Sign
         ChannelCfgData *chancfgdat;
 
         signcfg s_config;
-        channelcfg c_config;
+//        channelcfg c_config;
 
         bool configSign(const char *cfgfile);
         void printSignCfg();
@@ -33,8 +38,8 @@ class Sign
         bool configChannels(const char *cfgfile);
         void printChanCfg();
 
-        NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod> *strip;
-        NeoPixelAnimator *animations;
-
         void initStrip(int pxCount = DEFAULT_PIXEL_COUNT);
+
+        //static 
+        AnimUpdateCallback animChannel(const AnimationParam& param);
 };

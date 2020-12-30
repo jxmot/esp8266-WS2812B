@@ -10,4 +10,5 @@ Re-purposing an old "*bar back*" sign to be a visual indicator or decorative. Th
 
 **20171214** : Basic UDP communications is working, acts as a server and replies. Also sends a multi-cast message upon successful start up and init. Create the `20171214-bar-sign-udp` branch, it can be used as a starting point for other UDP enabled applicaions.
 
-
+---
+<img src="http://webexperiment.info/extcounter/mdcount.php?id=esp8266-WS2812B">
